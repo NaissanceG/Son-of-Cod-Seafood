@@ -1,0 +1,28 @@
+<div class="container index_style">
+    <div class="row">
+      <div class="col-md-8">
+        <%= image_tag @product.image.url(:medium) %>
+      </div>
+      <div class="col-md-4">
+        <em><i>Name</i></em>
+        <h4><%= @product.name %></h4>
+        <em><i>Origin</i></em>
+        <h4><%= @product.origin%></h4>
+        <em><i>Price</i></em>
+        <h5>$ <%= @product.price %></h5>
+        <em><i>Species</i></em>
+        <h4> <%= @product.species %></h4>
+        <em></i>Description</i></em>
+        <p>
+          <h5><%= @product.description%></h5>
+        </p>
+      </div>
+    </div>
+    <div class="">
+      <%= link_to "Back", products_path%> |
+      <%= link_to "Edit", edit_product_path(@product) %> |
+      <%= link_to "Delete", product_path(@product), :data => { :confirm => "Are you sure?",
+                                                               :method => "delete" } %>
+    </div>
+
+</div>

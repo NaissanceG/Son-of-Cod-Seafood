@@ -1,0 +1,17 @@
+<div class="container index_style">
+  <% @products.each do |product| %>
+    <div class="row">
+      <div class="col-md-8">
+        <%= link_to (image_tag product.image.url(:medium)), product_path(product) %>
+      </div>
+      <div class="col-md-4">
+        <em><i>Name</i></em>
+        <h4><%= product.name %></h4>
+        <em><i>Origin</i></em>
+        <h4><%= product.origin%></h4>
+        <em><i>Price</i></em>
+        <h5>$ <%= product.price %></h5>
+      </div>
+    </div>
+  <% end %>
+</div>
