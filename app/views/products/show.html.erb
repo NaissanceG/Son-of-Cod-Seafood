@@ -1,4 +1,8 @@
 <div class="container index_style">
+  <div class="name">
+    <h3>posted by</h3>
+    <%= @product.user.user_name %>
+  </div>
     <div class="row">
       <div class="col-md-8">
         <%= image_tag @product.image.url(:medium) %>
@@ -19,10 +23,14 @@
       </div>
     </div>
     <div class="">
+      <% if @product.user.id == current_user.id or @product.user.admin == true %>
       <%= link_to "Back", products_path%> |
       <%= link_to "Edit", edit_product_path(@product) %> |
       <%= link_to "Delete", product_path(@product), :data => { :confirm => "Are you sure?",
-                                                               :method => "delete" } %>
+                                                               :method => "delete" } %> |
+      <% else %>
+      <%= link_to "Back", products_path%>
+      <% end %>
     </div>
 
 </div>

@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  belongs_to :user
+  has_many :comments, dependent: :destroy
   validates :image, :name, :description, :species, :price, :origin, presence: true
 
   has_attached_file :image, styles: { :medium => "640x" }

@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @products = Product.all
@@ -9,7 +10,7 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product = current_user.products.build
   end
 
   def edit
@@ -17,7 +18,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = current_user.products.build(product_params)
     if @product.save
       flash[:success]= "The Product has been successfully added"
       redirect_to root_path
