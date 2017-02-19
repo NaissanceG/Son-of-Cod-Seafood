@@ -1,8 +1,8 @@
 <div class="container index_style">
   <div class="name">
-    <h3>posted by</h3>
-    <%= @product.user.user_name %>
+    <h3>Posted by: <%= (@product.user.user_name).capitalize %></h3>
   </div>
+  <hr>
     <div class="row">
       <div class="col-md-8">
         <%= image_tag @product.image.url(:medium) %>
@@ -22,15 +22,49 @@
         </p>
       </div>
     </div>
+    <hr>
     <div class="">
-      <% if @product.user.id == current_user.id or @product.user.admin == true %>
-      <%= link_to "Back", products_path%> |
+      <% if current_user.admin == true %>
+      <%= link_to "Home", products_path%> |
       <%= link_to "Edit", edit_product_path(@product) %> |
       <%= link_to "Delete", product_path(@product), :data => { :confirm => "Are you sure?",
                                                                :method => "delete" } %> |
       <% else %>
-      <%= link_to "Back", products_path%>
+      <%= link_to "Home", products_path%>
       <% end %>
     </div>
-
 </div>
+
+
+<div class="container row">
+  <div class="col-md-4">
+    <% if @product.comments.any? %>
+      <% @product.comments.each do |comment| %>
+    <div class="well well-sm">
+      <h4><i>posted_by</i> <%= comment.user.user_name %></h4>
+      <div class="container">
+        <%= comment.content %>
+        <% if current_user.admin == true  %>
+          <%= link_to product_comment_path(@product, comment), method: :delete, data: { confirm: "Are you sure?" } do %>
+          <span class="glyphicon glyphicon-remove delete-comment"> </span><br>
+        <% end %>
+        <% end %>
+      </div>
+    </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form_for([@product, @product.comments.build]) do |f| %>
+      <%= f.text_area :content, size: "50x15" %><br>
+      <%= f.submit class: "btn-success" %>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+  </div>
+</div>
+<hr>

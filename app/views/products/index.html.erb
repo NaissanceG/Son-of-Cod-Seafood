@@ -1,17 +1,35 @@
-<div class="container index_style">
-  <% @products.each do |product| %>
-    <div class="row">
-      <div class="col-md-8">
-        <%= link_to (image_tag product.image.url(:medium)), product_path(product) %>
-      </div>
-      <div class="col-md-4">
-        <em><i>Name</i></em>
-        <h4><%= product.name %></h4>
-        <em><i>Origin</i></em>
-        <h4><%= product.origin%></h4>
-        <em><i>Price</i></em>
-        <h5>$ <%= product.price %></h5>
-      </div>
-    </div>
+<div class="container">
+
+  <% if current_user.admin == true %>
+      <h1>Welcome, <%= (current_user.user_name).capitalize %></h1>
+      <%= button_to "Add New Product", new_product_path, :class => "btn btn-success getro", :method => :get %>
+      <strong><p> Since you are an Administrator of this site, Click the button to add new products......</p></strong>
+
+     <% else %>
+     <h1>Welcome, <%= (current_user.user_name).capitalize %></h1>
   <% end %>
+</div>
+<hr>
+<div class="container index_style">
+  <div class="container">
+    <% @products.each do |product| %>
+      <div class="container row">
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <%= link_to (image_tag product.image.url(:medium)), product_path(product) %>
+            <hr>
+            <div class="caption">
+              <em><i>Name</i></em>
+              <h4><%= product.name %></h4>
+              <em><i>Price</i></em>
+              <h5>$ <%= product.price %></h5>
+              <em><i>Origin</i></em>
+              <h4><%= product.origin%></h4>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
 </div>

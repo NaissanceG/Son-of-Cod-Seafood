@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :admin_rights, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @products = Product.all
@@ -49,5 +50,12 @@ class ProductsController < ApplicationController
 private
   def product_params
     params.require(:product).permit(:image, :name, :description, :price, :origin, :species)
+  end
+
+  def admin_rights
+    unless current_user.admin == true
+      flash[:alert] = "You are not an admin"
+      redirect_to root_path
+    end
   end
 end

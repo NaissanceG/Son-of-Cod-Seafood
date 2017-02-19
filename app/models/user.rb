@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :comments, dependent: :destroy
+
   
-  validates :user_id, presence: true
   validates :user_name, presence: true, length: { minimum: 4, maximum: 10 }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
