@@ -2,6 +2,10 @@ require 'rails_helper'
 
 
 describe Product do
+  it "has a valid factory" do
+    expect(FactoryGirl.build(:product)).to be_valid
+  end
+
   it { should validate_presence_of :name }
   it { should validate_presence_of :description }
   it { should validate_presence_of :species }
@@ -11,11 +15,4 @@ describe Product do
   it { should validate_presence_of :image }
   it { should belong_to :user }
   it { should have_many :comments }
-end
-
-describe Product do
-  it 'is public by default' do
-    product = FactoryGirl.create(:product)
-    product.public?.should eq flase
-  end
 end
