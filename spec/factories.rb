@@ -1,42 +1,37 @@
 include ActionDispatch::TestProcess
 
-
-
 FactoryGirl.define do
-  factory(:product) do
-    name('gummy_bear')
-    description('It is honestly quite lovely')
-    species('bearinorious')
-    price('12')
-    origin('Pdx')
-    user_id('1')
+
+  factory :product do
+    name 'gumy_bear'
+    description 'It is hnesty quite lovely'
+    species 'berinorious'
+    price '12'
+    origin 'Px'
+    user_id '19'
     image { fixture_file_upload(Rails.root.join('spec', 'photos', 'test.png'), 'image/png') }
     user
   end
-end
 
-FactoryGirl.define do
-  before(:each) do
-      @user = User.new
-      @user.user_name = "a valid username"
-   end
-
-  factory(:user) do
-    sequence(:email) { |n| "#{n}@example.com" }
-    user_name 'merde'
-    password 'passwod'
-    password_confirmation { password }
-
-  factory :admin do
-     admin true
+  trait :with_comments do
+    after :create do |product|
+      FactoryGirl.create_list :comment, :product => product
     end
   end
-end
 
-FactoryGirl.define do
-  factory(:comment) do
-    content('gummy bear is seriously ok')
+  factory :user  do
+    sequence (:email)  {|n| "persodn#{n}@example.com" }
+    sequence (:user_name) {|n| "merfdlo #{n}" }
+    password 'passwodsd'
+    password_confirmation 'passwodsd'
+    admin   false
+  end
+
+
+  factory :comment  do
+    content 'gummy bear is seriously ok'
     product
     user
   end
+  
 end
